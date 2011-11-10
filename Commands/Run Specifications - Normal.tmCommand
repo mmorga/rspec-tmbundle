@@ -11,6 +11,11 @@
 
 cat &lt;&lt;'RUBYEOF' &gt; /tmp/textmate-command-$$.rb
 
+if ENV['TM_PROJECT_DIRECTORY']
+  project_spec_dir = File.expand_path(File.join(ENV['TM_PROJECT_DIRECTORY'], "spec"))
+  $: &lt;&lt; project_spec_dir if File.exist?(project_spec_dir)
+end
+
 require ENV['TM_BUNDLE_SUPPORT'] + "/lib/rspec/mate"
 RSpec::Mate::Runner.new.run_file STDOUT
 
